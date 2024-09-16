@@ -1304,14 +1304,14 @@ class CNextEvents{
 		return $html;
 	}
 
-	function OnBeforeBasketUpdateHandler($ID, &$arFields){
+	static function OnBeforeBasketUpdateHandler($ID, &$arFields){
 		/*if((int)$arFields["ORDER_ID"] <= 0)
 		{
 			
 		}*/
 	}
 
-	function OnGetOptimalPriceHandler($intProductID, $quantity = 1, $arUserGroups = array(), $renewal = "N", $priceList = array(), $siteID = false, $arDiscountCoupons = false){
+	static function OnGetOptimalPriceHandler($intProductID, $quantity = 1, $arUserGroups = array(), $renewal = "N", $priceList = array(), $siteID = false, $arDiscountCoupons = false){
 		global $APPLICATION, $arRegion;
 		static $priceTypeCache = array();
 		if(!$arRegion)
