@@ -7,7 +7,7 @@ if(!class_exists("CNextCache")){
 		static public $arIBlocks = NULL;
 		static public $arIBlocksInfo = NULL;
 
-		function CIBlock_GetList($arOrder = array("SORT" => "ASC", "CACHE" => array("MULTI" => "Y", "GROUP" => array(), "RESULT" => array(), "TAG" => "", "PATH" => "", "TIME" => 36000000)), $arFilter = array(), $bIncCnt = false){
+    static function CIBlock_GetList($arOrder = array("SORT" => "ASC", "CACHE" => array("MULTI" => "Y", "GROUP" => array(), "RESULT" => array(), "TAG" => "", "PATH" => "", "TIME" => 36000000)), $arFilter = array(), $bIncCnt = false){
 			list($cacheTag, $cachePath, $cacheTime) = self::_InitCacheParams("iblock", __FUNCTION__, $arOrder["CACHE"]);
 			$obCache = new CPHPCache();
 			$cacheID = __FUNCTION__."_".$cacheTag.md5(serialize(array_merge((array)$arOrder, (array)$arFilter, (array)$bIncCnt)));
@@ -40,7 +40,7 @@ if(!class_exists("CNextCache")){
 			return $arRes;
 		}
 
-		function CIBlockElement_GetList($arOrder = array("SORT" => "ASC", "CACHE" => array("MULTI" => "Y", "CACHE_GROUP" => array(false), "GROUP" => array(), "RESULT" => array(), "TAG" => "", "PATH" => "", "TIME" => 36000000, "URL_TEMPLATE" => "")), $arFilter = array(), $arGroupBy = false, $arNavStartParams = false, $arSelectFields = array()){
+		static function CIBlockElement_GetList($arOrder = array("SORT" => "ASC", "CACHE" => array("MULTI" => "Y", "CACHE_GROUP" => array(false), "GROUP" => array(), "RESULT" => array(), "TAG" => "", "PATH" => "", "TIME" => 36000000, "URL_TEMPLATE" => "")), $arFilter = array(), $arGroupBy = false, $arNavStartParams = false, $arSelectFields = array()){
 
 			// check filter by IBLOCK_ID === false
 			if(array_key_exists("IBLOCK_ID", ($arFilter = (array)$arFilter)) && !$arFilter["IBLOCK_ID"]){
@@ -170,7 +170,7 @@ if(!class_exists("CNextCache")){
 			return $arRes;
 		}
 
-		function CIBlockSection_GetList($arOrder = array("SORT" => "ASC", "CACHE" => array("MULTI" => "Y", "CACHE_GROUP" => array(false), "GROUP" => array(), "RESULT" => array(), "TAG" => "", "PATH" => "", "TIME" => 36000000, "URL_TEMPLATE" => "")), $arFilter = array(), $bIncCnt = false, $arSelectFields = array(), $arNavStartParams = false){
+		static function CIBlockSection_GetList($arOrder = array("SORT" => "ASC", "CACHE" => array("MULTI" => "Y", "CACHE_GROUP" => array(false), "GROUP" => array(), "RESULT" => array(), "TAG" => "", "PATH" => "", "TIME" => 36000000, "URL_TEMPLATE" => "")), $arFilter = array(), $bIncCnt = false, $arSelectFields = array(), $arNavStartParams = false){
 
 			// check filter by IBLOCK_ID === false
 			if(array_key_exists("IBLOCK_ID", ($arFilter = (array)$arFilter)) && !$arFilter["IBLOCK_ID"]){
@@ -352,7 +352,7 @@ if(!class_exists("CNextCache")){
 			return $arRes;
 		}
 
-		function CUser_GetList($arOrder = array("SORT" => "ASC", "CACHE" => array("MULTI" => "Y", "GROUP" => array(), "RESULT" => array(), "TAG" => "", "PATH" => "", "TIME" => 36000000)), $arFilter = array(), $arParameters=array()){
+		static function CUser_GetList($arOrder = array("SORT" => "ASC", "CACHE" => array("MULTI" => "Y", "GROUP" => array(), "RESULT" => array(), "TAG" => "", "PATH" => "", "TIME" => 36000000)), $arFilter = array(), $arParameters=array()){
 			list($cacheTag, $cachePath, $cacheTime) = self::_InitCacheParams("main", __FUNCTION__, $arOrder["CACHE"]);
 
 			$obCache = new CPHPCache();
@@ -457,7 +457,7 @@ if(!class_exists("CNextCache")){
 			return $arRes;
 		}
 
-		private function _MakeResultTreeArray($arParams, &$arItem, &$arItemResval, &$to){
+		private static function _MakeResultTreeArray($arParams, &$arItem, &$arItemResval, &$to){
 
 			if($arParams["GROUP"]){
 				$newto = $to;
@@ -490,9 +490,9 @@ if(!class_exists("CNextCache")){
 			}
 		}
 
-		function GroupArrayBy($arItems, $arParams){
+		static function GroupArrayBy($arItems, $arParams){
 			$arRes = array();
-			$resultIDsCount = count($arParams["RESULT"]);
+			$resultIDsCount = count($arParams["RESULT"] ?? []);
 			$arParams["RESULT"] = array_diff((array)$arParams["RESULT"], array(null));
 			$arParams["GROUP"] = array_diff((array)$arParams["GROUP"], array(null));
 			foreach($arItems as $arItem){
@@ -515,7 +515,7 @@ if(!class_exists("CNextCache")){
 			return $arRes;
 		}
 
-		private function _InitCacheParams($moduleName, $functionName, $arCache){
+		private static function _InitCacheParams($moduleName, $functionName, $arCache){
 			CModule::IncludeModule($moduleName);
 			$cacheTag = $arCache["TAG"];
 			$cachePath = $arCache["PATH"];
@@ -529,7 +529,7 @@ if(!class_exists("CNextCache")){
 			return array($cacheTag, $cachePath, $cacheTime);
 		}
 
-		private function _GetElementSectionsArray($ID){
+		private static function _GetElementSectionsArray($ID){
 			$arSections = array();
 			$resGroups = CIBlockElement::GetElementGroups($ID, true, array("ID"));
 			while($arGroup = $resGroups->Fetch()){
@@ -538,7 +538,7 @@ if(!class_exists("CNextCache")){
 			return (!$arSections ? false : (count($arSections) == 1 ? current($arSections) : $arSections));
 		}
 
-		private function _GetFieldsAndProps($dbRes, $arSelectFields, $bIsIblockElement = false, $bCanMultiSection = true){
+		private static function _GetFieldsAndProps($dbRes, $arSelectFields, $bIsIblockElement = false, $bCanMultiSection = true){
 			$arRes = $arResultIDsIndexes = array();
 			if($arSelectFields && (in_array("DETAIL_PAGE_URL", $arSelectFields) === false && in_array("SECTION_PAGE_URL", $arSelectFields) === false)){
 				$func = "Fetch";
@@ -594,7 +594,7 @@ if(!class_exists("CNextCache")){
 			return $arRes;
 		}
 
-		private function _SaveDataCache($obCache, $arRes, $cacheTag, $cachePath, $cacheTime, $cacheID){
+		private static function _SaveDataCache($obCache, $arRes, $cacheTag, $cachePath, $cacheTime, $cacheID){
 			if($cacheTime > 0 && \Bitrix\Main\Config\Option::get("main", "component_cache_on", "Y") != "N"){
 				$obCache->StartDataCache($cacheTime, $cacheID, $cachePath);
 
@@ -609,7 +609,7 @@ if(!class_exists("CNextCache")){
 			}
 		}
 
-		function GetIBlockCacheTag($IBLOCK_ID){
+		static function GetIBlockCacheTag($IBLOCK_ID){
 			if(!$IBLOCK_ID){
 				return false;
 			}
@@ -618,7 +618,7 @@ if(!class_exists("CNextCache")){
 			}
 		}
 
-		function GetUserCacheTag($id){
+		static function GetUserCacheTag($id){
 			if(!$id){
 				return false;
 			}
@@ -641,7 +641,7 @@ if(!class_exists("CNextCache")){
 			$CACHE_MANAGER->ClearByTag("iblocks");
 		}
 
-		function ClearCacheByTag($tag){
+    static function  ClearCacheByTag($tag){
 			global $CACHE_MANAGER;
 			$CACHE_MANAGER->ClearByTag($tag);
 		}

@@ -1047,7 +1047,9 @@ class CNext{
 	}
 
 	public static function ShowAdminRow($optionCode, $arOption, $arTab, $arControllerOption){
-		$optionName = $arOption['TITLE'];
+        static $bStores;
+        static $arUserGroups;
+        $optionName = $arOption['TITLE'];
 		$optionType = $arOption['TYPE'];
 		$optionList = $arOption['LIST'];
 		$optionDefault = $arOption['DEFAULT'];
@@ -1211,7 +1213,7 @@ class CNext{
 					{
 						if($arOption['TYPE_SELECT'] == 'STORES')
 						{
-							static $bStores;
+
 							if ($bStores === null){
 								$bStores = false;
 								if(\Bitrix\Main\Loader::includeModule('catalog')){
@@ -1243,7 +1245,7 @@ class CNext{
 						}
 						elseif($arOption['TYPE_SELECT'] == 'GROUP')
 						{
-							static $arUserGroups;
+
 							if($arUserGroups === null){
 								$DefaultGroupID = 0;
 								$rsGroups = CGroup::GetList($by = "id", $order = "asc", array("ACTIVE" => "Y"));
@@ -1286,7 +1288,7 @@ class CNext{
 					{
 						if($arOption['TYPE_SELECT'] == 'STORES')
 						{
-							static $bStores;
+
 							if ($bStores === null){
 								$bStores = false;
 								if(\Bitrix\Main\Loader::includeModule('catalog')){
@@ -1333,7 +1335,7 @@ class CNext{
 						}
 						elseif($arOption['TYPE_SELECT'] == 'GROUP')
 						{
-							static $arUserGroups;
+
 							if($arUserGroups === null){
 								$DefaultGroupID = 0;
 								$rsGroups = CGroup::GetList($by = "id", $order = "asc", array("ACTIVE" => "Y"));

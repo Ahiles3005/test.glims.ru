@@ -511,7 +511,7 @@ $elementName = ((isset($arResult['IPROPERTY_VALUES']['ELEMENT_PAGE_TITLE']) && $
 											</div>
 											<div class="properties__hr muted properties__item--inline">&mdash;</div>
 											<div class="properties__value darken properties__item--inline">
-												<?if(count($arProp["DISPLAY_VALUE"]) > 1):?>
+												<?if(is_array($arProp["DISPLAY_VALUE"]) && count($arProp["DISPLAY_VALUE"]) > 1):?>
 													<?=implode(', ', $arProp["DISPLAY_VALUE"]);?>
 												<?else:?>
 													<?=($arProp['DISPLAY_VALUE'] ? $arProp['DISPLAY_VALUE'] : $arProp['VALUE']);?>

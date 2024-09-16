@@ -457,8 +457,8 @@ if ($normalCount > 0):
 			</tbody>
 		</table>
 	</div>
-	<input type="hidden" id="column_headers" value="<?=htmlspecialcharsbx(implode($arHeaders, ","))?>" />
-	<input type="hidden" id="offers_props" value="<?=htmlspecialcharsbx(implode($arParams["OFFERS_PROPS"], ","))?>" />
+	<input type="hidden" id="column_headers" value="<?=htmlspecialcharsbx(implode(",", $arHeaders))?>" />
+	<input type="hidden" id="offers_props" value="<?=htmlspecialcharsbx(implode(",", $arParams["OFFERS_PROPS"]))?>" />
 	<input type="hidden" id="action_var" value="<?=htmlspecialcharsbx($arParams["ACTION_VARIABLE"])?>" />
 	<input type="hidden" id="quantity_float" value="<?=($arParams["QUANTITY_FLOAT"] == "Y") ? "Y" : "N"?>" />
 	<input type="hidden" id="price_vat_show_value" value="<?=($arParams["PRICE_VAT_SHOW_VALUE"] == "Y") ? "Y" : "N"?>" />

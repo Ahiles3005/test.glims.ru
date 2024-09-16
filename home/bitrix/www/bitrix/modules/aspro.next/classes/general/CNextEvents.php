@@ -18,7 +18,7 @@ class CNextEvents{
 	function ShowPanel(){
     }
 
-	function BeforeSendEvent(\Bitrix\Main\Event $event){
+	static function BeforeSendEvent(\Bitrix\Main\Event $event){
 		if(isset($_REQUEST["ONE_CLICK_BUY"]) && method_exists('\Bitrix\Sale\Compatible\EventCompatibility', 'setDisableMailSend')){
 			\Bitrix\Sale\Compatible\EventCompatibility::setDisableMailSend(true);
 			if(method_exists('\Bitrix\Sale\Notify', 'setNotifyDisable'))
