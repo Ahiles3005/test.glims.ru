@@ -4,7 +4,7 @@ use Bitrix\Main\Application;
 
 class RewriteLinkForRegion
 {
-    public function handle() {
+    public static function handle() {
         global $arRegion;
         if ($arRegion['PROPERTY_DEFAULT_VALUE'] !== 'Y') {
             $defaultRegion = \CIBlockElement::getList([], ['IBLOCK_ID' => $arRegion['IBLOCK_ID'], 'PROPERTY_DEFAULT_VALUE' => 'Y'],

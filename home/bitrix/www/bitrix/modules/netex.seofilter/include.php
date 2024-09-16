@@ -40,7 +40,7 @@ class CNetexEvent
 	/**
 	 * Set SEO parameters of page (such as title, meta, h1 etc.)
 	 */
-	public function OnEpilog()
+	public static function OnEpilog()
 	{
 		if(CNetexSeoFilter::getInstance()->isLanding())
 		{

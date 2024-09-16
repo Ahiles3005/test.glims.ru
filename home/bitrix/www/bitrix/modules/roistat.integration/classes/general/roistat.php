@@ -4,7 +4,7 @@ IncludeModuleLangFile(__FILE__);
 
 class CRoistat
 {
-    function OnEndBufferContentHandler(&$content)
+    static function OnEndBufferContentHandler(&$content)
     {
         if (defined('ADMIN_SECTION'))
             return;
@@ -24,7 +24,14 @@ class CRoistat
         }
         $escapedProjectId = CUtil::JSEscape($counterKey);
 
-        $isDisableCounter = (array_key_exists($siteId, $availableSites) && !$availableSites[$siteId]) || $counterKey === '';
+        if($counterKey === ''){
+            return;
+        }
+        if(!is_array($availableSites)){
+            return;
+        }
+
+        $isDisableCounter = (array_key_exists($siteId, $availableSites) && !$availableSites[$siteId]) ;
 
         if ($isDisableCounter) {
             return;
