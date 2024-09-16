@@ -2463,7 +2463,9 @@ class CMax{
 	}
 
 	public static function ShowAdminRow($optionCode, $arOption, $arTab, $arControllerOption, $btable = false){
-		$optionName = $arOption['TITLE'];
+        static $arUserGroups;
+
+        $optionName = $arOption['TITLE'];
 		$optionType = $arOption['TYPE'];
 		$optionList = $arOption['LIST'];
 		$optionDefault = $arOption['DEFAULT'];
@@ -2836,7 +2838,6 @@ class CMax{
 						}
 						elseif($arOption['TYPE_SELECT'] == 'GROUP')
 						{
-							static $arUserGroups;
 							if($arUserGroups === null){
 								$DefaultGroupID = 0;
 								$rsGroups = CGroup::GetList($by = "id", $order = "asc", array("ACTIVE" => "Y"));
@@ -3104,7 +3105,7 @@ class CMax{
 						}
 						elseif($arOption['TYPE_SELECT'] == 'GROUP')
 						{
-							static $arUserGroups;
+
 							if($arUserGroups === null){
 								$DefaultGroupID = 0;
 								$rsGroups = CGroup::GetList($by = "id", $order = "asc", array("ACTIVE" => "Y"));
