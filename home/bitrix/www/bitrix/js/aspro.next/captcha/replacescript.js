@@ -27,7 +27,7 @@
 		var hasParentNode = false;
 		if(typeof parentNode !== "undefined")
 			hasParentNode = parentNode !== null;
-		
+
 		if(hasParentNode)
 			inputs = parentNode.getElementsByTagName('input');
 		else
@@ -159,16 +159,16 @@
 			var captchaWords = getCaptchaWords(form);
 			if(captchaWords.length === 0)
 				continue;
-			
+
 			var captchaImages = getCaptchaImages(form);
 			if(captchaImages.length === 0)
 				continue;
 			for(j = 0; j < captchaWords.length; j++)
 				replaceCaptchaWordWithReCAPTCHAField(captchaWords[j]);
-			
+
 			for(j = 0; j < captchaImages.length; j++)
 				hideCaptchaImage(captchaImages[j]);
-			
+
 			replaceCaptchaHintMessagesWithReCAPTCHAHintMessages(form);
 		}
 	};
@@ -234,8 +234,19 @@
 			return true;
 		}
 	};
-	if(!!document.addEventListener)
-		document.addEventListener('DOMNodeInserted', captchaHandler, false);
-	else
+	if (!!document.addEventListener) {
+		//document.addEventListener('DOMNodeInserted', captchaHandler, false);
+		const observer = new MutationObserver(captchaHandler);
+		const config = { childList: true, subtree: true };
+		function startObserving() {
+			if (document.body) {
+				observer.observe(document.body, config);
+			} else {
+				console.warn('document.body is not available');
+			}
+		}
+		document.addEventListener('DOMContentLoaded', startObserving);
+	} else {
 		console.warn('Your browser does not support dynamic ReCaptcha replacement');
+	}
 })();
