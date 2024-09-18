@@ -50,7 +50,7 @@ JAVASCRIPT;
         $content = preg_replace("/<head>/", "<head>{$js}", $content, 1);
     }
 
-    function __AddRoistatOrderProperty($ORDER_ID)
+    static function __AddRoistatOrderProperty($ORDER_ID)
     {
         if (!array_key_exists('visit', $_REQUEST) && !array_key_exists('roistat_visit', $_COOKIE)) {
             return;
@@ -82,7 +82,7 @@ JAVASCRIPT;
             CSaleOrderPropsValue::Add($arPropFields);
     }
 
-    function OnOrderSaveHandler($ID, $arFields)
+    static function OnOrderSaveHandler($ID, $arFields)
     {
         CRoistat::__AddRoistatOrderProperty($ID);
     }
@@ -90,13 +90,13 @@ JAVASCRIPT;
     /**
      * @param \Bitrix\Main\Event $event
      */
-    function OnSaleOrderSavedHandler(Bitrix\Main\Event $event)
+    static function OnSaleOrderSavedHandler(Bitrix\Main\Event $event)
     {
         $order = $event->getParameter('ENTITY');
         CRoistat::__AddRoistatOrderProperty($order->getId());
     }
 
-    function OnOrderNewSendEmailHandler($ID, &$eventName, &$arFields)
+    static function OnOrderNewSendEmailHandler($ID, &$eventName, &$arFields)
     {
         CRoistat::__AddRoistatOrderProperty($ID);
     }

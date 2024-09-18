@@ -229,7 +229,7 @@ class CNextEvents{
 		}
 	}
 
-	function OnSaleComponentOrderOneStepComplete($ID, $arOrder, $arParams){
+	static function OnSaleComponentOrderOneStepComplete($ID, $arOrder, $arParams){
 		$arOrderProps = array();
 		$resOrder = CSaleOrderPropsValue::GetList(array(), array('ORDER_ID' => $ID));
 		while($item = $resOrder->fetch())
