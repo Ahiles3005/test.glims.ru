@@ -1,9 +1,9 @@
 function setBigData(params) {
   const { siteId, template, componentPath, parameters, bigData, wrapper, countBigdata } = params;
   if (bigData && (typeof bigData === 'object')) {
-    BX.cookie_prefix = bigData.js.cookiePrefix || "";
-    BX.cookie_domain = bigData.js.cookieDomain || "";
-    BX.current_server_time = bigData.js.serverTime;
+    BX.cookie_prefix = bigData?.js?.cookiePrefix || "";
+    BX.cookie_domain = bigData?.js?.cookieDomain || "";
+    BX.current_server_time = bigData?.js?.serverTime || '';
 
     let url = "https://analytics.bitrix.info/crecoms/v1_0/recoms.php";
     const data = BX.ajax.prepareData(bigData.params);
