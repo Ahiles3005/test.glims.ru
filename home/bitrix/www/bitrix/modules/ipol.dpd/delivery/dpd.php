@@ -90,7 +90,7 @@ class DPD
 	/**
 	 * Возвращает параметры обработчика
 	 */
-	public function Init()
+	public static function Init()
 	{
 		self::$needIncludeComponent = true;
 
