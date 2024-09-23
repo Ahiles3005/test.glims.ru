@@ -9412,3 +9412,10 @@ function array_values_js(input) {
 
   return tmp_arr;
 }
+
+$(document).ready(function(){
+  $(document).on('click', '.jqmClose',function(e){
+    e.preventDefault();
+    $(this).closest('.jqmWindow').jqmHide();
+  })
+});
